@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment GateWay</title>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/lib/bank-Payments.js"></script>
+
+    <style>
+        .ng-invalid {
+            border-color: #f00 !important;
+        }
+        label {
+            font: bold 12px arial;
+        }
+        
+        
+    </style>
+</head>
+<body ng-app="app" ng-controller="paymentCtrl">
+    <div class="container">
+        <div class="row full-height">
+            <div class="span4 offset4">
+                    <div class="span4">
+                        <h3>Make My Payment</h3>
+                    </div>
+                    <form name="paymentForm" ng-model="paymentForm" novalidate>
+                        <div class="span3">
+                            <label for="name">Account Name</label>
+                            <input type="text" name="name" class="input-block-level" ng-model="name" ng-minlength="4" maxlength="20" required>
+                            <span ng-show="paymentForm.name.$error.minlength">min 4 chars.</span>
+                            <span ng-if="paymentForm.$submitted && paymentForm.name.$error.required">Name required</span>
+
+                        </div>
+                        <div class="span3">
+                            <label for="account">Account number</label>
+                            <input type="text" class="input-block-level" name="account" numbers-only ng-minlength="6" ng-model="account" min="6" maxlength="12" required>
+                            <span ng-if="paymentForm.$submitted && paymentForm.account.$error.required">Account required</span>
+                            <span ng-show="paymentForm.account.$error.minlength">min 6 digit number</span>
+                        </div>
+
+                        <div class="span3">
+                            <label for="bsb">BSB</label>
+                            <input type="text" numbers-only class="input-block-level" name="bsb" ng-minlength="6" maxlength="6" ng-model="bsb" required />
+                            <span ng-if="paymentForm.$submitted && paymentForm.bsb.$error.required">BSB required</span>
+                            <span ng-show="paymentForm.bsb.$error.minlength">6 digit BSB number</span>
+                        </div>
+                        <div class="span4">
+                            <label for="amount">Payment Amount</label>
+                            <input type="text" numbers-only class="input-block-level" name="amount" ng-model="amount" ng-minlength="4" maxlength="7" required />
+                            <span ng-if="paymentForm.$submitted && paymentForm.amount.$error.required">Amount required</span>
+                            <span ng-show="paymentForm.amount.$error.minlength">min $1000</span>
+                        </div>
+                        <div class="span4">
+                            <button type="submit" ng-click="paymentForm.$valid && submitForm()" class="btn btn-primary btn-large">Pay</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
